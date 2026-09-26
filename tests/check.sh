@@ -1,6 +1,5 @@
 #!/bin/sh
 # Portable regression tests: run from the repository root after compiling.
-set -u
 program=./cpsc457-a1
 scratch=tests/.check-$$
 mkdir "$scratch" || exit 1
