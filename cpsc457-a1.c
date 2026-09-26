@@ -175,14 +175,14 @@ int main(int argc, char *argv[])
     /* Reap every started child, including after a partial startup failure. */
     for (i = 0; i < started; ++i) {
         do {
-            waited = waitpid(children[i], &status, 0);
+            waited = wait(&status);
         } while (waited < 0 && errno == EINTR);
         if (waited < 0) {
-            perror("waitpid");
+            perror("wait");
             failed = 1;
         } else if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
             fprintf(stderr, "Child %ld did not finish successfully.\n",
-                    (long)children[i]);
+                    (long)waited);
             failed = 1;
         }
     }
