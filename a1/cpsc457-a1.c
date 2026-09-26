@@ -126,3 +126,36 @@ int main(int argc, char *argv[])
         }
     }
 
+    started = 0;
+    failed = 0;
+    for (i = 0; i < requested; ++i) {
+        /* Create the pipe BEFORE fork so both processes inherit its ends. */
+        if (pipe(pipefd) < 0) {
+            perror("pipe");
+            failed = 1;
+            break;
+        }
+        child = fork();
+        if (child < 0) {
+            perror("fork");
+            close(pipefd[0]);
+            close(pipefd[1]);
+            failed = 1;
+            break;
+        }
+        if (child == 0) {
+            close(pipefd[0]);
+            /* Earlier pipes' write ends were already closed by the parent. */
+            for (j = 0; j < started; ++j)
+                close(readers[j]);
+            status = write_result(pipefd[1], fibonacci(indices[i]));
+            close(pipefd[1]);
+            /* Never continue the parent's fork loop or print in a child. */
+            _exit(status == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
+        }
+        close(pipefd[1]);
+        children[started] = child;
+        readers[started] = pipefd[0];
+        ++started;
+    }
+
