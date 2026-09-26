@@ -5,7 +5,8 @@ results to the parent through pipes. Only the parent prints the final results.
 
 ## Compile and run in Minix
 
-Place the source in `/usr/src/home/a1`, then run:
+The submission files are in the repository's `a1/` folder. Place
+`a1/cpsc457-a1.c` in `/usr/src/home/a1` inside Minix, then run:
 
 ```sh
 cd /usr/src/home/a1
