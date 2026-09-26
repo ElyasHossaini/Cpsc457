@@ -111,3 +111,18 @@ int main(int argc, char *argv[])
     pid_t child;
     pid_t waited;
 
+    requested = argc - 1;
+    if (requested < 1 || requested > MAX_ARGUMENTS) {
+        fprintf(stderr, "Usage: %s index [index ...] (1 to 8 indices, 0 to 47)\n",
+                argv[0]);
+        return EXIT_FAILURE;
+    }
+    /* Validate every argument before spawning any processes. */
+    for (i = 0; i < requested; ++i) {
+        if (parse_index(argv[i + 1], &indices[i]) != 0) {
+            fprintf(stderr, "Invalid index '%s': expected an integer from 0 to 47.\n",
+                    argv[i + 1]);
+            return EXIT_FAILURE;
+        }
+    }
+
