@@ -94,3 +94,20 @@ static int read_result(int fd, unsigned long *result)
     return 0;
 }
 
+int main(int argc, char *argv[])
+{
+    unsigned int indices[MAX_ARGUMENTS];
+    pid_t children[MAX_ARGUMENTS];
+    int readers[MAX_ARGUMENTS];
+    unsigned long results[MAX_ARGUMENTS];
+    int received[MAX_ARGUMENTS];
+    int pipefd[2];
+    int requested;
+    int started;
+    int failed;
+    int status;
+    int i;
+    int j;
+    pid_t child;
+    pid_t waited;
+
