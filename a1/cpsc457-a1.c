@@ -53,3 +53,24 @@ static unsigned long fibonacci(unsigned int index)
     return current;
 }
 
+/* A pipe is a byte stream: retry interruptions and finish partial transfers. */
+static int write_result(int fd, unsigned long result)
+{
+    const char *bytes;
+    size_t remaining;
+    ssize_t amount;
+
+    bytes = (const char *)&result;
+    remaining = sizeof(result);
+    while (remaining != 0) {
+        amount = write(fd, bytes, remaining);
+        if (amount < 0 && errno == EINTR)
+            continue;
+        if (amount <= 0)
+            return -1;
+        bytes += amount;
+        remaining -= (size_t)amount;
+    }
+    return 0;
+}
+
