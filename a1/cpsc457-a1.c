@@ -74,3 +74,23 @@ static int write_result(int fd, unsigned long result)
     return 0;
 }
 
+static int read_result(int fd, unsigned long *result)
+{
+    char *bytes;
+    size_t remaining;
+    ssize_t amount;
+
+    bytes = (char *)result;
+    remaining = sizeof(*result);
+    while (remaining != 0) {
+        amount = read(fd, bytes, remaining);
+        if (amount < 0 && errno == EINTR)
+            continue;
+        if (amount <= 0)
+            return -1;
+        bytes += amount;
+        remaining -= (size_t)amount;
+    }
+    return 0;
+}
+
