@@ -187,3 +187,19 @@ int main(int argc, char *argv[])
         }
     }
 
+    if (failed)
+        return EXIT_FAILURE;
+    /* Only the parent prints results, in the same order as the arguments. */
+    for (i = 0; i < started; ++i) {
+        if (printf("Child Process (PID %ld) F{%u} = %lu\n",
+                   (long)children[i], indices[i], results[i]) < 0) {
+            perror("stdout");
+            return EXIT_FAILURE;
+        }
+    }
+    if (fflush(stdout) == EOF) {
+        perror("stdout");
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+}
