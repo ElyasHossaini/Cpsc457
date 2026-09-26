@@ -1,0 +1,5 @@
+PASS all 48 supported Fibonacci indices against independent reference
+PASS exactly 8 children, per-child pipe writes, parent-only stdout, 8 reaped children
+PASS invalid input creates no children
+PASS clone failure after 2 children: diagnostic, cleanup, nonzero exit
+PASS pipe2 failure after 2 children: diagnostic, cleanup, nonzero exit

@@ -1,0 +1,29 @@
+MINIX_TEST_START
+Minix minix 3 1.0 i686
+COMPILE_STATUS=0
+Child Process (PID 82) F{3} = 2
+Child Process (PID 83) F{5} = 5
+Child Process (PID 84) F{2} = 1
+Child Process (PID 85) F{9} = 34
+Child Process (PID 86) F{20} = 6765
+PASS assignment_sample
+PASS base_cases
+PASS eight_arguments
+PASS repeats_and_order
+PASS upper_boundary
+PASS leading_zeroes
+PASS no_arguments
+PASS nine_arguments
+PASS negative
+PASS too_large
+PASS integer_overflow
+PASS text
+PASS mixed_digits
+PASS empty
+PASS whitespace
+PASS decimal
+PASS plus_sign
+PASS later_bad_argument
+RESULT: 18 passed; 0 failed
+TEST_STATUS=0
+MINIX_TEST_END
