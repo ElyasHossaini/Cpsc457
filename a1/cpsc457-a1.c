@@ -34,3 +34,22 @@ static int parse_index(const char *text, unsigned int *index)
     return 0;
 }
 
+static unsigned long fibonacci(unsigned int index)
+{
+    unsigned long previous;
+    unsigned long current;
+    unsigned long next;
+    unsigned int i;
+
+    if (index == 0)
+        return 0;
+    previous = 0;
+    current = 1;
+    for (i = 2; i <= index; ++i) {
+        next = previous + current;
+        previous = current;
+        current = next;
+    }
+    return current;
+}
+
