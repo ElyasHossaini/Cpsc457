@@ -159,3 +159,16 @@ int main(int argc, char *argv[])
         ++started;
     }
 
+    /* All children are started before collecting results, preserving parallelism.
+     * Each pipe carries one fixed-size unsigned long within the same machine.
+     */
+    for (i = 0; i < started; ++i) {
+        received[i] = read_result(readers[i], &results[i]) == 0;
+        close(readers[i]);
+        if (!received[i]) {
+            fprintf(stderr, "Could not read the result from child %ld.\n",
+                    (long)children[i]);
+            failed = 1;
+        }
+    }
+
